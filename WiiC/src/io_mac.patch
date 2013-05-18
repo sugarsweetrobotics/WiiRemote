@@ -1,0 +1,12 @@
+diff -u wiic_old/io_mac.m wiic/io_mac.m
+--- wiic_old/io_mac.m	2013-05-07 08:44:49.000000000 +0900
++++ wiic/io_mac.m	2013-05-07 07:54:15.000000000 +0900
+@@ -559,7 +559,7 @@
+ 	for (; i < wiimotes; ++i) {
+ 		if(!(wm[i])) {
+ 			WIIC_ERROR("Trying to connect more Wiimotes than initialized");
+-			return;
++			return connected;
+ 		}
+ 		
+ 		if (!WIIMOTE_IS_SET(wm[i], WIIMOTE_STATE_DEV_FOUND))
