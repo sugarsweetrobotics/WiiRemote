@@ -131,13 +131,20 @@ RTC::ReturnCode_t WiiRemote::onShutdown(RTC::UniqueId ec_id)
 RTC::ReturnCode_t WiiRemote::onActivated(RTC::UniqueId ec_id)
 {
   if (m_numFound == 0) {
-    std::cout << "Please turn on your WiiRemote." << std::endl;
-    m_numFound = m_Wii.Find(1);
+    for (int i = 0;i < 3;i++) {
+      std::cout << "[RTC::WiiRemote] Please turn on your WiiRemote." << std::endl;
+      m_numFound = m_Wii.Find(1);
+      if (m_numFound == 1) {
+	break;
+      }
+    }
+
     if (m_numFound != 1) {
-      std::cout << "Can not find Wii Remote." << std::endl;
+      std::cout << "[RTC::WiiRemote] Can not find Wii Remote." << std::endl;
       return RTC_ERROR;
     }
 
+    std::cout << "[RTC::WiiRemote] Wii Remote Found." << std::endl;
     m_Wii.Connect();
   } else {
     // Reload Wiimotes.
@@ -183,7 +190,7 @@ RTC::ReturnCode_t WiiRemote::onExecute(RTC::UniqueId ec_id)
     } else if (m_aspect_ratio == "16_9") {
       wiimote.IR.SetAspectRatio(CIR::ASPECT_16_9);
     } else {
-      std::cout << "WiiRemote:: unknow aspect ratio." << std::endl;
+      std::cout << "[RTC::WiiRemote] Unknow aspect ratio." << std::endl;
       return RTC_ERROR;
     }
   }
